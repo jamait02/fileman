@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    #  - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - 'POSTGRES_DB=fileman-db'
+      - 'POSTGRES_PASSWORD=verysecretsecret'
+      - 'POSTGRES_USER=pguser'
+    ports:
+      - '51252:5432'
+volumes:
+  pgdata:
