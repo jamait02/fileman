@@ -10,4 +10,9 @@ class FileManApplicationTests {
     void contextLoads() {
     }
 
+    @Test
+    void sayHello() {
+        Controller app = new Controller(DatabaseConfig.jdbcTemplate());
+        assert(app.sayHello().equals("Hello world."));
+    }
 }

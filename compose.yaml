@@ -10,6 +10,6 @@ services:
       - 'POSTGRES_PASSWORD=verysecretsecret'
       - 'POSTGRES_USER=pguser'
     ports:
-      - '51252:5432'
+      - '5432:5432'
 volumes:
   pgdata:
