@@ -2,6 +2,8 @@ package com.example.fileman.File.FileAccess;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.List;
+
 public class FileAccessService {
     public static int addFileAccess(JdbcTemplate jdbcTemplate, int group_id, int file_id, String access_type) {
         String query = "INSERT INTO file_access (file_id, group_id, access_type) VALUES (?, ?, ?)";
@@ -18,8 +20,8 @@ public class FileAccessService {
         return jdbcTemplate.update(query, access_type, group_id, file_id);
     }
 
-    public static FileAccess getFileAccessById(JdbcTemplate jdbcTemplate, int id) {
-        String query = "SELECT * FROM file_access WHERE id = ?";
-        return jdbcTemplate.query(query, new FileAccessMapper(), id).get(0);
+    public static List <FileAccess> getFileAccessByGroupId(JdbcTemplate jdbcTemplate, int group_id) {
+        String query = "SELECT * FROM file_access WHERE group_id = ?";
+        return jdbcTemplate.query(query, new FileAccessMapper(), group_id);
     }
 }

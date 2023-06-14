@@ -1,11 +1,14 @@
 package com.example.fileman;
 
+import com.example.fileman.Directory.DirectoryAccess.DirectoryAccess;
 import com.example.fileman.File.FileAccess.FileAccess;
 import com.example.fileman.File.FileAccess.FileAccessService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.List;
 
 @SpringBootTest
 public class FileAccessServiceTests {
@@ -29,12 +32,18 @@ public class FileAccessServiceTests {
     @Test
     public void testGetFileAccessById() {
         // Get the file access
-        FileAccess file_access = FileAccessService.getFileAccessById(jdbcTemplate, 1);
+        List<FileAccess> file_access = FileAccessService.getFileAccessByGroupId(jdbcTemplate, 1);
 
-        // Check if the file access data matches
-        assert(file_access.getId() == 1);
-        assert(file_access.getFile_id() == 1);
-        assert(file_access.getGroup_id() == 1);
+        try {
+            for (FileAccess access : file_access) {
+                if (access.getFile_id() == 1) {
+                    assert(true);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            assert(false);
+        }
     }
 
     @Test

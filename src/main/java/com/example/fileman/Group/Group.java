@@ -1,6 +1,13 @@
 package com.example.fileman.Group;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
 public class Group {
+    @Id
+    @GeneratedValue
     private Integer id;
     private String name;
     private String role;

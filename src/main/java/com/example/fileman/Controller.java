@@ -15,13 +15,11 @@ import com.example.fileman.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class Controller {
     private final JdbcTemplate jdbcTemplate;
@@ -373,6 +371,26 @@ public class Controller {
                 id
         );
     }
+
+    @GetMapping("/getDirectoriesByDirectoryIds")
+    public List <Directory> getDirectoriesByDirectoryIds(
+            @RequestParam("directory_ids") List<Integer> directory_ids
+    ) {
+        return DirectoryService.getDirectoriesByDirectoryIds(
+                jdbcTemplate,
+                directory_ids
+        );
+    }
+
+    @GetMapping("/getDirectoryByPath")
+    public Directory getDirectoryByPath(
+            @RequestParam("path") String path
+    ) {
+        return DirectoryService.getDirectoryByPath(
+                jdbcTemplate,
+                path
+        );
+    }
     //endregion
 
     //region Directory Access
@@ -520,8 +538,8 @@ public class Controller {
     public int addFile(
             @RequestParam("name") String name,
             @RequestParam("directory_id") int directory_id,
-            @RequestParam("created_at") int created_by,
-            @RequestParam("updated_at") int updated_by
+            @RequestParam("created_by") int created_by,
+            @RequestParam("updated_by") int updated_by
     ) {
         return FileService.addFile(
                 jdbcTemplate,
@@ -606,6 +624,16 @@ public class Controller {
         return FileService.getFileById(
                 jdbcTemplate,
                 id
+        );
+    }
+
+    @GetMapping("/getFilesByFileIds")
+    public List<File> getFilesByFileIds(
+            @RequestParam("file_ids") List<Integer> file_ids
+    ) {
+        return FileService.getFilesByFileIds(
+                jdbcTemplate,
+                file_ids
         );
     }
     //endregion
@@ -694,7 +722,7 @@ public class Controller {
     /**
      * Retrieves file access by its ID.
      *
-     * @param id The ID of the file access to retrieve.
+     * @param group_id The Group ID of the file access to retrieve.
      *
      * @return The file access corresponding to the provided ID.
      *
@@ -705,13 +733,13 @@ public class Controller {
      *     // File Access ID: 1
      *     getFileAccess(1);
      */
-    @GetMapping("/getFileAccess")
-    public FileAccess getFileAccess(
-            @RequestParam("id") int id
+    @GetMapping("/getFileAccessByGroupId")
+    public List <FileAccess> getFileAccessByGroupId(
+            @RequestParam("id") int group_id
     ) {
-        return FileAccessService.getFileAccessById(
+        return FileAccessService.getFileAccessByGroupId(
                 jdbcTemplate,
-                id
+                group_id
         );
     }
     //endregion

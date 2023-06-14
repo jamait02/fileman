@@ -1,6 +1,13 @@
 package com.example.fileman.Directory.DirectoryAccess;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
 public class DirectoryAccess {
+    @Id
+    @GeneratedValue
     private Integer id;
     private Integer directory_id;
     private Integer group_id;

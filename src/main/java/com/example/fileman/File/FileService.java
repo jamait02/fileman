@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.List;
 
 @Service
 public class FileService {
@@ -27,6 +28,18 @@ public class FileService {
     public static File getFileById(JdbcTemplate jdbcTemplate, int id) {
         String query = "SELECT * FROM \"file\" WHERE id = ?";
         return jdbcTemplate.query(query, new FileMapper(), id).get(0);
+    }
+
+    public static List<File> getFilesByFileIds(JdbcTemplate jdbcTemplate, List<Integer> file_ids) {
+        String query = "SELECT * FROM \"file\" WHERE id IN (";
+        for (int i = 0; i < file_ids.size(); i++) {
+            query += "?";
+            if (i != file_ids.size() - 1) {
+                query += ", ";
+            }
+        }
+        query += ")";
+        return jdbcTemplate.query(query, new FileMapper(), file_ids.toArray());
     }
 
     public static File getFileByName(JdbcTemplate jdbcTemplate, String name) {
